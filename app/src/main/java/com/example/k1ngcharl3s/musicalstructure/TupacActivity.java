@@ -61,6 +61,8 @@ public class TupacActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.song_list);
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        // Create a list of songs
         final ArrayList<Song> songs = new ArrayList<>();
         songs.add(new Song(" Tupac", "\n Picture Me Rollin", R.drawable.tupac1, R.raw.picture_me_rollin));
         songs.add(new Song(" Tupac", "\n Holla At Me", R.drawable.tupac1, R.raw.holla_at_me));
@@ -91,19 +93,30 @@ public class TupacActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, android.view.View view, int position, long l) {
+
+                // Get the {@link Song} object at the given position the user clicked on
                 Song song = songs.get(position);
                 releaseMediaPlayer();
 
                 // Request audio focus so in order to play the audio file. The app needs to play a
                 // short audio file, so we will request audio focus with a short amount of time
                 // with AUDIOFOCUS_GAIN_TRANSIENT.
+
+                // Create and setup the {@link MediaPlayer} for the audio resource associated
+                // with the current song
                 mMediaPlayer = MediaPlayer.create(TupacActivity.this, song.getAudioResourceId());
+
+                // Request audio focus so in order to play the audio file. The app needs to play a
+                // short audio file, so we will request audio focus with a short amount of time
+                // with AUDIOFOCUS_GAIN_TRANSIENT.
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
                         AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 mMediaPlayer.start();
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     // We have audio focus now.
                     mMediaPlayer.setOnCompletionListener(mCompletionListener);
+
+                    // Start the audio file
                     mMediaPlayer.start();
                     mMediaPlayer.setOnCompletionListener(mCompletionListener);
                 }

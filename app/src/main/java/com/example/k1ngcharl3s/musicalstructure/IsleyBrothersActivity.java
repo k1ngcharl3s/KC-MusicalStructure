@@ -80,16 +80,27 @@ public class IsleyBrothersActivity extends AppCompatActivity {
         // Create an {@link SongAdapter}, whose data source is a list of {@link songs}s. The
         // adapter knows how to create list items for each item in the list.
         SongAdapter adapter = new SongAdapter(this, songs);
+
+        // Create an {@link SongAdapter}, whose data source is a list of {@link songs}s. The
+        // adapter knows how to create list items for each item in the list.
         ListView songsListView = findViewById(R.id.list);
         songsListView.setAdapter((ListAdapter) adapter);
         songsListView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(android.widget.AdapterView<?> adapterView, android.view.View view, int position, long l) {
+
+                // Get the {@link Song} object at the given position the user clicked on
                 Song song = songs.get(position);
                 releaseMediaPlayer();
                 mMediaPlayer = MediaPlayer.create(IsleyBrothersActivity.this, song.getAudioResourceId());
+
+                // Request audio focus so in order to play the audio file. The app needs to play a
+                // short audio file, so we will request audio focus with a short amount of time
+                // with AUDIOFOCUS_GAIN_TRANSIENT.
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
                         AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+
+                // Start the audio file
                 mMediaPlayer.start();
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     mMediaPlayer.setOnCompletionListener(mCompletionListener);
@@ -107,7 +118,6 @@ public class IsleyBrothersActivity extends AppCompatActivity {
     /**
      * Clean up the media player by releasing its resources.
      */
-
 
     private void releaseMediaPlayer() {
         // If the media player is not null, then it may be currently playing a sound.

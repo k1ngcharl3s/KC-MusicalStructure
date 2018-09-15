@@ -63,6 +63,8 @@ public class ChristinaAguileraActivity extends AppCompatActivity {
 
         // Create and setup the {@link AudioManager} to request audio focus
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        // Create a list of songs
         final ArrayList<Song> songs = new ArrayList<>();
         songs.add(new Song(" Christina Aguilera", "\n Understand", R.drawable.christinaaguilera, R.raw.understand));
         songs.add(new Song(" Christina Aguilera", "\n Loving Me For Me", R.drawable.christinaaguilera, R.raw.loving_me_for_me));
@@ -75,14 +77,31 @@ public class ChristinaAguileraActivity extends AppCompatActivity {
         // adapter knows how to create list items for each item in the list.
         SongAdapter adapter = new SongAdapter(this, songs);
 
+        // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
+        // There should be a {@link ListView} with the view ID called list, which is declared in the
+        // word_list.xml layout file.
         ListView songsListView = findViewById(R.id.list);
+
+        // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the
+        // {@link ListView} will display list items for each {@link Word} in the list.
         songsListView.setAdapter((ListAdapter) adapter);
+
+        // Set a click listener to play the audio when the list item is clicked on
         songsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(android.widget.AdapterView<?> adapterView, android.view.View view, int position, long l) {
+
+                // Get the {@link Song} object at the given position the user clicked on
                 Song song = songs.get(position);
                 releaseMediaPlayer();
+
+                // Create and setup the {@link MediaPlayer} for the audio resource associated
+                // with the current song
                 mMediaPlayer = MediaPlayer.create(ChristinaAguileraActivity.this, song.getAudioResourceId());
+
+                // Request audio focus so in order to play the audio file. The app needs to play a
+                // short audio file, so we will request audio focus with a short amount of time
+                // with AUDIOFOCUS_GAIN_TRANSIENT.
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
                         AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 mMediaPlayer.start();
@@ -90,6 +109,7 @@ public class ChristinaAguileraActivity extends AppCompatActivity {
                     // We have auto focus now
                     mMediaPlayer.setOnCompletionListener(mCompletionListener);
 
+                    // Start the audio file
                     mMediaPlayer.start();
                     mMediaPlayer.setOnCompletionListener(mCompletionListener);
                 }
