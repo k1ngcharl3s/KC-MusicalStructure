@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/layout_margin"
-        android:layout_marginRight="@dimen/layout_margin"
-        android:fontFamily="sans-serif-light"
-        android:paddingBottom="@dimen/padding_bottom"
-        android:paddingTop="@dimen/padding_top">
+    android:layout_height="wrap_content"
+    android:background="@color/colorAccent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        
+
+
         <ImageView
             android:id="@+id/tupac"
             android:layout_width="@dimen/layout_width"
@@ -87,5 +89,5 @@
             android:layout_marginStart="@dimen/margin_start"
             android:layout_marginTop="@dimen/margin_top_3"
             android:src="@drawable/baseline_play_arrow_black_24dp" />
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>
